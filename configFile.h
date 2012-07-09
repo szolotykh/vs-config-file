@@ -1,5 +1,5 @@
 /*
-Last edition: 10/01/2011
+ConfigFile.h
 */
 #ifndef CONFIG_FILE_H
 #define CONFIG_FILE_H
