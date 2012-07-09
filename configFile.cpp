@@ -1,5 +1,6 @@
 /*
-Last edition: 10/01/2011
+configFile.cpp
+Last edition: 07/09/2012
 */
 #include "configFile.h"
 
@@ -61,19 +62,17 @@ bool configFile::read(char *fileName){
 		if(!fComment1 && !fComment2)
 			sFile=sFile+ch1;
 		//-------------------------
-		
-		//Delete every thing aftre last ';'
+
+		// Delete every thing aftre last ';'
 		int p=sFile.rfind(";");
 		if(p==-1)
 			throw Error(CF_SINTAXIS_ERR,"File sintaxis error.");
-		
-		//cout<<sFile<<endl<<sFile.length()<<" p= "<<p<<endl;
-		
+
 		if(p!=sFile.length()){
 			string sEnd=sFile.substr(p+1);
 			int j=0;
 			while(j<sEnd.length()){
-				if(sEnd[j]!=' ' && sEnd[j]!='\n')//check if ending of file
+				if(sEnd[j]!=' ' && sEnd[j]!='\n') // Check if ending of file
 					throw Error(CF_SINTAXIS_ERR,"File sintaxis error1.");
 				j++;
 			}
@@ -83,7 +82,7 @@ bool configFile::read(char *fileName){
 		int k=0;
 		while(k<sFile.length()){
 			string str="";
-			
+
 			while(k<sFile.length()){
 				if(sFile[k]==';'){
 					k++; break;
@@ -96,14 +95,14 @@ bool configFile::read(char *fileName){
 			string name="";
 			string value="";
 			bool fName=true;
-	
+
 			int pos = str.find("=");
 			if(pos==-1)
 				throw Error(CF_SINTAXIS_ERR,"File sintaxis error.");
 			name=str.substr(0,pos);
 			value=str.substr(pos+1);
 
-			//----Check name on error and delete spaces and line ends----
+			//---- Check name on error and delete spaces and line ends ----
 			string buff="";
 			i=0;
 			fName=false;
@@ -114,7 +113,8 @@ bool configFile::read(char *fileName){
 						i++;
 						continue;
 					}
-					if((name[i]>=97&&name[i]<=122)||(name[i]>=65&&name[i]<=90)||(name[i]>=48&&name[i]<=57)||(name[i]=='_')){
+					if((name[i]>=97&&name[i]<=122)||(name[i]>=65&&name[i]<=90)||
+						(name[i]>=48&&name[i]<=57)||(name[i]=='_')){
 						buff=buff+name[i];
 						fName=true;
 						i++;
@@ -128,7 +128,8 @@ bool configFile::read(char *fileName){
 						fNameEnd=true;
 						i++; continue;
 					}
-					if((name[i]>=97&&name[i]<=122)||(name[i]>=65&&name[i]<=90)||(name[i]>=48&&name[i]<=57)||(name[i]=='_')){
+					if((name[i]>=97&&name[i]<=122)||(name[i]>=65&&name[i]<=90)||
+						(name[i]>=48&&name[i]<=57)||(name[i]=='_')){
 						buff=buff+name[i];
 						i++; continue;
 					}
@@ -140,16 +141,16 @@ bool configFile::read(char *fileName){
 					}
 					throw Error(CF_SINTAXIS_ERR,"File sintaxis error.");
 				}
-				
+
 			}
 			name=buff;
 
-			//----Check value on error and delete spaces and line ends----
+			//---- Check value on error and delete spaces and line ends ----
 			buff="";
 			i=0;
 			bool fValue=false;
 			bool fValueEnd=false;
-			bool fValueType=false; //false is number, true is string;
+			bool fValueType=false; // false is number, true is string;
 			bool fValueDot=false;
 
 			while(i<value.length()){
@@ -157,7 +158,7 @@ bool configFile::read(char *fileName){
 					if(value[i]==' '||value[i]=='\n'){
 						i++; continue;
 					}
-					if((value[i]>=48&&value[i]<=57)){//Number started
+					if((value[i]>=48&&value[i]<=57)){ // Number started
 						buff=buff+value[i];
 						fValue=true;
 						i++; continue;
@@ -203,7 +204,7 @@ bool configFile::read(char *fileName){
 						fValueEnd=true;
 						i++; continue;
 					}
-					if(i==value.length()-1){//check if user forgot close quotes
+					if(i==value.length()-1){// Check if user forgot close quotes
 						throw Error(CF_SINTAXIS_ERR,"File sintaxis error.");
 					}
 					buff=buff+value[i];
@@ -216,11 +217,9 @@ bool configFile::read(char *fileName){
 					}
 					throw Error(CF_SINTAXIS_ERR,"File sintaxis error.");
 				}
-				
+
 			}
 			value=buff;
-			//----------------------
-			//cout<<"Command: "<<name<<", Value: "<<value<<endl;
 			this->push_back(cFileNote(name,value));
 		}
 	}
