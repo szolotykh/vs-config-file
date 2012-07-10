@@ -1,1 +1,1 @@
-Config file readme
+Vs Config file readme
