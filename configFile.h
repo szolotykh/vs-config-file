@@ -12,8 +12,6 @@ Last edition: 07/09/2012
 #include <sstream>
 #include "ErrorBase.h"
 
-using namespace std;
-
 #define CF_OPEN_FILE_ERR 1
 #define CF_SINTAXIS_ERR 5
 #define CF_NAME_IS_NOT_PRESENT 10
@@ -21,14 +19,14 @@ using namespace std;
 
 //------Class cFileNote----------
 class cFileNote{
-	string name; // Name of variable
-	string value; // Value of variable
+	std::string name; // Name of variable
+	std::string value; // Value of variable
 public:
-	cFileNote(string n, string v){ name=n; value=v; };
-	string getStrValue(){ return value; };
-	string getName(){ return name; };
+	cFileNote(std::string n, std::string v){ name=n; value=v; };
+	std::string getStrValue(){ return value; };
+	std::string getName(){ return name; };
 	bool operator==(cFileNote el){ return name==el.name; };
-	bool operator==(string varName){ return name==varName; };
+	bool operator==(std::string varName){ return name==varName; };
 	template <class data_t> bool getValue(data_t &var);
 };
 
@@ -41,13 +39,13 @@ template <class data_t> bool cFileNote::getValue(data_t &var){
 };
 
 //-----class configFile-------------
-class configFile: public  vector<cFileNote>, public ErrorBase{
+class configFile: public  std::vector<cFileNote>, public ErrorBase{
 public:
-	bool read(char *fileName);
-	template <class data_t> bool getValue(string varName, data_t &var);
+	bool read(std::string);
+	template <class data_t> bool getValue(std::string varName, data_t &var);
 };
 
-template <class data_t> bool configFile::getValue(string varName, data_t &var){
+template <class data_t> bool configFile::getValue(std::string varName, data_t &var){
 	for(int i=0;i<this->size();i++){
 		if(this->at(i)==varName){
 			if(!this->at(i).getValue(var)){

@@ -2,6 +2,8 @@
 #include <conio.h>
 #include "configFile.h"
 
+using namespace std;
+
 // Default values for variables
 int port=7777;
 string address="127.0.0.1";

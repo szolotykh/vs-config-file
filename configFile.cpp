@@ -5,19 +5,19 @@ Last edition: 07/09/2012
 #include "configFile.h"
 
 
-bool configFile::read(char *fileName){
-	ifstream myfile;
-	string sFile="";
+bool configFile::read(std::string fileName){
+	std::ifstream myfile;
+	std::string sFile="";
 	char ch1, ch2;
 	bool fComment1=false;//  Type //
 	bool fComment2=false;//  Type /* */
 
 	try{
 		//Open config file
-		myfile.open(fileName);
+		myfile.open(fileName.c_str());
 		if(!myfile.is_open())
 			throw Error(CF_OPEN_FILE_ERR,"Error opening config file.");
-		myfile.unsetf(ios::skipws);
+		myfile.unsetf(std::ios::skipws);
 
 		//Read file to sFile and delete comments
 		if(!myfile.eof())
@@ -69,7 +69,7 @@ bool configFile::read(char *fileName){
 			throw Error(CF_SINTAXIS_ERR,"File sintaxis error.");
 
 		if(p!=sFile.length()){
-			string sEnd=sFile.substr(p+1);
+			std::string sEnd=sFile.substr(p+1);
 			int j=0;
 			while(j<sEnd.length()){
 				if(sEnd[j]!=' ' && sEnd[j]!='\n') // Check if ending of file
@@ -81,7 +81,7 @@ bool configFile::read(char *fileName){
 		//-------------------------
 		int k=0;
 		while(k<sFile.length()){
-			string str="";
+			std::string str="";
 
 			while(k<sFile.length()){
 				if(sFile[k]==';'){
@@ -92,8 +92,8 @@ bool configFile::read(char *fileName){
 			}
 
 			int i=0;
-			string name="";
-			string value="";
+			std::string name="";
+			std::string value="";
 			bool fName=true;
 
 			int pos = str.find("=");
@@ -103,7 +103,7 @@ bool configFile::read(char *fileName){
 			value=str.substr(pos+1);
 
 			//---- Check name on error and delete spaces and line ends ----
-			string buff="";
+			std::string buff="";
 			i=0;
 			fName=false;
 			bool fNameEnd=false;
