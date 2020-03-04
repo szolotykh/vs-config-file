@@ -1,7 +1,7 @@
-#Vs Config file readme
+# Vs Config file readme
 
 ## Config File example
-```
+```cpp
 // String
 address="192.168.0.105";
 
